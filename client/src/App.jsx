@@ -27,7 +27,7 @@ export default function App() {
   }, [searchTerm, category]);
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col max-w-[70%]">
+      <div className="flex flex-col max-w-[70%] w-full">
         <SearchBar
           posters={posters}
           searchTerm={searchTerm}
