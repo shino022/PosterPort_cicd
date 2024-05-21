@@ -5,6 +5,12 @@
 
 
 body {
-    @apply bg-cover bg-center h-screen w-screen;
+    @apply bg-cover bg-center h-full w-full;
     background-image: url('./assets/background.jpg');
+    background-attachment: fixed;
+     /* Keeps the background fixed in place */
+    margin: 0;
+    overflow-y: scroll;
   }
+
+

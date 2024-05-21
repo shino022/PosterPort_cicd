@@ -4,7 +4,7 @@ function SearchBar({ searchTerm, setSearchTerm, category, setCategory }) {
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
-      className="flex items-center bg-gray-100 rounded-lg overflow-hidden shadow-md m-4 pr-1 w-[100%]"
+      className="flex items-center bg-gray-100 rounded-lg overflow-hidden shadow-md mt-2 pr-1 w-[100%]"
     >
       <select
         value={category}

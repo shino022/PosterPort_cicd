@@ -11,8 +11,8 @@ const posters = [
     },
     {
         id: 2,
-        title: "The Lurking Vampire",
-        description: "A vampire lurks in the shadows. An 80's cartoon style horror depiction of a vampire in the woods.",
+        title: "The Werewolf in the Woods",
+        description: "A werewolf lurks in the woods. An 80's cartoon style horror depiction of a werewolf in the woods.",
         price: 19.99,
         imageUrl: posterImage,
         category: "Horror"
