@@ -1,7 +1,7 @@
 import { MdAdd } from "react-icons/md";
 import { useState } from "react";
 import { MdCancel } from "react-icons/md";
-
+import { IoMdDownload } from "react-icons/io";
 
 const Card = ({
   posterId,
@@ -37,7 +37,7 @@ const Card = ({
       <img
         src={posterImg}
         alt={posterTitle}
-        className="rounded-lg cursor-pointer"
+        className="rounded-lg cursor-pointer hover:scale-105"
         onClick={() => setIsExpanded(true)}
       />
       <h2>{posterTitle}</h2>
@@ -45,7 +45,7 @@ const Card = ({
       <div className="flex justify-between items-center">
         <p className="text-xl">{`$${posterPrice}`}</p>
         <button
-          className="flex hover:cursor-pointer bg-amber-500 rounded-lg p-2"
+          className="flex hover:cursor-pointer  bg-amber-500 rounded-lg p-2"
           onClick={() => console.log(posterId)}
         >
           Cart
@@ -60,7 +60,7 @@ const Card = ({
               className="absolute top-0 right-0 m-2 text-black"
               onClick={() => setIsExpanded(false)}
             >
-              <MdCancel className="text-2xl bg-white"/>
+              <MdCancel className="text-2xl bg-white" />
             </button>
             <img
               src={posterImg}
@@ -68,10 +68,11 @@ const Card = ({
               className="rounded-lg cursor-pointer w-[500px] h-[500px]"
             />
             <button
-              className="mt-2 px-4 py-2 bg-blue-500  text-white rounded-md"
+              className="flex items-center gap-2 mt-2 px-4 py-2 bg-blue-500  text-white rounded-md"
               onClick={handleDownload}
             >
-              Download
+              <p>Download</p>
+              <IoMdDownload />
             </button>
           </div>
         </div>
