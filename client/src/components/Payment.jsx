@@ -1,56 +1,51 @@
 import { useState, useEffect } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import cardValidator from "card-validator";
 
 const PaymentPage = () => {
-  // State to manage the visibility of the success message
+  const [cardType, setCardType] = useState(""); // State to store the card type
+
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     formState: { errors, isSubmitSuccessful, isSubmitting },
     reset,
+    watch,
   } = useForm();
 
-  //   const cardNumber = watch("cardNumber");
-  // Watch all form inputs
-  const allInputs = watch();
-
-  // Specifically access the card number for validation
-  const cardNumber = allInputs.cardNumber;
+  const watchCardNumber = watch("cardNumber"); // Watch the card number input
 
   const onSubmit = async (data) => {
     console.log("Payment Data:", data);
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    setShowSuccessMessage(true);
+    // setShowSuccessMessage(true);
   };
+
   useEffect(() => {
-    // This effect clears the success message when any form field changes.
-    const subscription = watch(() => {
-      if (showSuccessMessage) {
-        setShowSuccessMessage(false);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch, showSuccessMessage]);
+    if (isSubmitSuccessful) {
+      setShowSuccessMessage(true);
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
 
-    // Validate card number and get card type
-    const cardNumberValidation = cardValidator.number(cardNumber);
-    const cardType = cardNumberValidation.card
-      ? cardNumberValidation.card.type
-      : undefined;
+  useEffect(() => {
+    if (isSubmitting) {
+      setShowSuccessMessage(false);
+    }
+  }, [isSubmitting]);
 
-    //function to format card number
-    const formatCardNumber = (event) => {
-      let { value } = event.target;
-      value = value
-        .replace(/\D/g, "")
-        .replace(/(\d{4})(?=\d)/g, "$1-") // Add dash every four digits
-        .substring(0, 19); // Limit length including dashes
-      setValue("cardNumber", value, { shouldValidate: true });
-    };
+  // Function to format card number
+  const formatCardNumber = (event) => {
+    let { value } = event.target;
+    value = value
+      .replace(/\D/g, "")
+      .replace(/(\d{4})(?=\d)/g, "$1-") // Add dash every four digits
+      .substring(0, 19); // Limit length including dashes
+    setValue("cardNumber", value, { shouldValidate: true });
+  };
 
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
@@ -59,16 +54,15 @@ const PaymentPage = () => {
         <div>
           <label
             htmlFor="firstname"
-            className="mt-2 block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700"
           >
             First Name
           </label>
           <input
             id="firstname"
-            type="text"
             {...register("firstName", { required: "First name is required" })}
             placeholder="John"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           />
           {errors.firstName && (
             <span className="text-red-500">{errors.firstName.message}</span>
@@ -76,16 +70,15 @@ const PaymentPage = () => {
 
           <label
             htmlFor="lastname"
-            className="mt-2 block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700"
           >
             Last Name
           </label>
           <input
             id="lastname"
-            type="text"
             {...register("lastName", { required: "Last name is required" })}
             placeholder="Doe"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           />
           {errors.lastName && (
             <span className="text-red-500">{errors.lastName.message}</span>
@@ -93,54 +86,61 @@ const PaymentPage = () => {
 
           <label
             htmlFor="cardnumber"
-            className="mt-2 block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700"
           >
             Card Number
           </label>
           <input
             id="cardnumber"
             type="text"
-            minLength={16}
             {...register("cardNumber", {
               required: "Card number is required",
-              validate: (value) =>
-                value.replace(/\D/g, "").length === 16 ||
-                "Card number must be 16 digits",
+              validate: (value) => {
+                const num = value.replace(/\D/g, "");
+                const validation = cardValidator.number(num);
+                setCardType(validation.card ? validation.card.type : "");
+                return (
+                  (validation.isValid && num.length === 16) ||
+                  "This is not a valid card number. Card number must be 16 digits"
+                );
+              },
             })}
-            value={cardNumber}
             onChange={formatCardNumber}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           />
-          {cardType && (
-            <span className="text-green-500 block">
-              Card Type: {cardType.toUpperCase()}
-            </span>
-          )}
           {errors.cardNumber && (
             <span className="text-red-500">{errors.cardNumber.message}</span>
           )}
 
+          {/* removed &&cardType because didnt seem like we need it */}
+          {!errors.cardNumber && watchCardNumber && (
+            <span className="text-green-500 block">
+              Card Type: {cardType.toUpperCase()}
+            </span>
+          )}
           <label
             htmlFor="cvv"
-            className="mt-2 block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700"
           >
             CVV
           </label>
           <input
             id="cvv"
             type="text"
-            minLength={3}
             maxLength={3}
             {...register("cvv", {
               required: "3 digit CVV is required",
+              maxLength: {
+                value: 3,
+                message: "CVV must be exactly 3 digits",
+              },
             })}
-            className="mt-1 block w-1/6 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-center"
+            className="block w-1/6 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-center"
           />
           {errors.cvv && (
             <span className="text-red-500">{errors.cvv.message}</span>
           )}
         </div>
-        {/* More inputs for expiry, CVV, etc. */}
 
         {isSubmitting && <p className="text-gray-500">Processing payment...</p>}
         {showSuccessMessage && (
