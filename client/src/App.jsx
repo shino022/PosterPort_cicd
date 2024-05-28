@@ -11,6 +11,7 @@ export default function App() {
   const [filteredResults, setFilteredResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
+  const [found, setFound] = useState(true);
 
   useEffect(() => {
     const filterResults = () => {
@@ -24,11 +25,14 @@ export default function App() {
           poster.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }
+
       setFilteredResults(results);
     };
 
     filterResults();
-  }, [searchTerm, category]);
+
+    filteredResults.length === 0 ? setFound(false) : setFound(true);
+  }, [searchTerm, category, filteredResults.length]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -69,50 +73,56 @@ export default function App() {
         >
           Go to Payment
         </Link>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-4 px-2 py-2">
-          {currentItems.map((poster) => (
-            <Card
-              key={poster.id}
-              posterId={poster.id}
-              posterImg={poster.imageUrl}
-              posterTitle={poster.title}
-              posterDescription={poster.description}
-              posterPrice={poster.price}
-            />
-          ))}
-        </div>
-        <div className="flex justify-center mt-4">
-          <button
-            className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${
-              currentPage === 1 ? "bg-gray-500" : "bg-amber-400"
-            }`}
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            <FaChevronLeft />
-          </button>
-          {/* Page Buttons */}
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              className={`px-4 py-2 mx-1 text-black rounded-md ${
-                currentPage === index + 1 ? "bg-amber-500" : "bg-amber-300"
-              }`}
-              onClick={() => handlePageClick(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
-          <button
-            className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${
-              currentPage === totalPages ? "bg-gray-500" : "bg-amber-400"
-            }`}
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            <FaChevronRight />
-          </button>
-        </div>
+        {found ? (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-4 px-2 py-2">
+              {currentItems.map((poster) => (
+                <Card
+                  key={poster.id}
+                  posterId={poster.id}
+                  posterImg={poster.imageUrl}
+                  posterTitle={poster.title}
+                  posterDescription={poster.description}
+                  posterPrice={poster.price}
+                />
+              ))}
+            </div>
+            <div className="flex justify-center mt-4">
+              <button
+                className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${
+                  currentPage === 1 ? "bg-gray-500" : "bg-amber-400"
+                }`}
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                <FaChevronLeft />
+              </button>
+              {/* Page Buttons */}
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index + 1}
+                  className={`px-4 py-2 mx-1 text-black rounded-md ${
+                    currentPage === index + 1 ? "bg-amber-500" : "bg-amber-300"
+                  }`}
+                  onClick={() => handlePageClick(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+              <button
+                className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${
+                  currentPage === totalPages ? "bg-gray-500" : "bg-amber-400"
+                }`}
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                <FaChevronRight />
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="text-3xl w-[300px] text-center rounded-md text-white py-2 bg-slate-700 m-auto">No results found</div>
+        )}
       </div>
     </div>
   );
