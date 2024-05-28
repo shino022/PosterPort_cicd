@@ -1,6 +1,8 @@
 import posters from "./data/posters";
 import SearchBar from "./components/SearchBar";
 import Card from "./components/Card";
+import CartButton from "./components/CartButton";
+import Hero from "./components/Hero";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -57,7 +59,9 @@ export default function App() {
   };
 
   return (
-    <div className="flex justify-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen">
+      <Hero />
+      <CartButton />
       <div className="flex flex-col items-center max-w-[70%] w-full mb-4">
         <SearchBar
           posters={posters}
@@ -67,6 +71,7 @@ export default function App() {
           setCategory={setCategory}
           setFilteredResults={setFilteredResults}
         />
+
         <Link
           to="/payment"
           className="bg-cyan-800 text-white px-4 py-2 rounded-md"
@@ -89,9 +94,8 @@ export default function App() {
             </div>
             <div className="flex justify-center mt-4">
               <button
-                className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${
-                  currentPage === 1 ? "bg-gray-500" : "bg-amber-400"
-                }`}
+                className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${currentPage === 1 ? "bg-gray-500" : "bg-amber-400"
+                  }`}
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
@@ -101,18 +105,16 @@ export default function App() {
               {Array.from({ length: totalPages }, (_, index) => (
                 <button
                   key={index + 1}
-                  className={`px-4 py-2 mx-1 text-black rounded-md ${
-                    currentPage === index + 1 ? "bg-amber-500" : "bg-amber-300"
-                  }`}
+                  className={`px-4 py-2 mx-1 text-black rounded-md ${currentPage === index + 1 ? "bg-amber-500" : "bg-amber-300"
+                    }`}
                   onClick={() => handlePageClick(index + 1)}
                 >
                   {index + 1}
                 </button>
               ))}
               <button
-                className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${
-                  currentPage === totalPages ? "bg-gray-500" : "bg-amber-400"
-                }`}
+                className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${currentPage === totalPages ? "bg-gray-500" : "bg-amber-400"
+                  }`}
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >

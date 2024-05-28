@@ -37,7 +37,7 @@ const Card = ({
       <img
         src={posterImg}
         alt={posterTitle}
-        className="rounded-lg cursor-pointer hover:scale-105"
+        className="rounded-lg cursor-pointer hover:scale-105 border border-blue-500 border-opacity-50"
         onClick={() => setIsExpanded(true)}
       />
       <h2 className="m-auto font-bold">{posterTitle}</h2>
