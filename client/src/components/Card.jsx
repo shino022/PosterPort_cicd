@@ -33,16 +33,18 @@ const Card = ({
   };
 
   return (
-    <div className="shadow-md rounded-md px-2 py-2 bg-slate-400 min-w-[200px] lg:min-w-[150px]">
+    <div className="shadow-md rounded-md px-2 py-2 bg-slate-400 min-w-[200px] lg:min-w-[150px] h-[500px] flex flex-col">
       <img
         src={posterImg}
         alt={posterTitle}
         className="rounded-lg cursor-pointer hover:scale-105"
         onClick={() => setIsExpanded(true)}
       />
-      <h2>{posterTitle}</h2>
-      <p className="italic">{posterDescription}</p>
-      <div className="flex justify-between items-center">
+      <h2 className="m-auto font-bold">{posterTitle}</h2>
+      <p className="italic m-auto font-bold text-blue-600">Click on image to download</p>
+      <p className="italic m-auto">{posterDescription}</p>
+
+      <div className="flex justify-between items-center mt-auto">
         <p className="text-xl">{`$${posterPrice}`}</p>
         <button
           className="flex hover:cursor-pointer  bg-amber-500 rounded-lg p-2"

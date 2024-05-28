@@ -6,7 +6,7 @@
 
 body {
     @apply bg-cover bg-center h-full w-full;
-    background-image: url('./assets/background.jpg');
+    background-image: url('./assets/bg80s.jpg');
     background-attachment: fixed;
      /* Keeps the background fixed in place */
     margin: 0;

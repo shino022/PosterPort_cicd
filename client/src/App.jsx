@@ -3,6 +3,7 @@ import SearchBar from "./components/SearchBar";
 import Card from "./components/Card";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -62,6 +63,12 @@ export default function App() {
           setCategory={setCategory}
           setFilteredResults={setFilteredResults}
         />
+        <Link
+          to="/payment"
+          className="bg-cyan-800 text-white px-4 py-2 rounded-md"
+        >
+          Go to Payment
+        </Link>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-4 px-2 py-2">
           {currentItems.map((poster) => (
             <Card
@@ -76,7 +83,9 @@ export default function App() {
         </div>
         <div className="flex justify-center mt-4">
           <button
-            className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${currentPage===1? 'bg-gray-500': 'bg-amber-400'}`}
+            className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${
+              currentPage === 1 ? "bg-gray-500" : "bg-amber-400"
+            }`}
             onClick={handlePrevPage}
             disabled={currentPage === 1}
           >
@@ -86,14 +95,18 @@ export default function App() {
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index + 1}
-              className={`px-4 py-2 mx-1 text-black rounded-md ${currentPage === index + 1 ? 'bg-amber-500' : 'bg-amber-300'}`}
+              className={`px-4 py-2 mx-1 text-black rounded-md ${
+                currentPage === index + 1 ? "bg-amber-500" : "bg-amber-300"
+              }`}
               onClick={() => handlePageClick(index + 1)}
             >
               {index + 1}
             </button>
           ))}
           <button
-            className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${currentPage===totalPages? 'bg-gray-500': 'bg-amber-400'}`}
+            className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${
+              currentPage === totalPages ? "bg-gray-500" : "bg-amber-400"
+            }`}
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
           >

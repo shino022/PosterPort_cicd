@@ -14,7 +14,10 @@ function SearchBar({ searchTerm, setSearchTerm, category, setCategory }) {
         <option>All categories</option>
         <option>Horror</option>
         <option>Sunny</option>
-        <option>Green</option>
+        <option>Night</option>
+        <option>Wasteland</option>
+        <option>Invasion</option> 
+        <option>Anime</option> 
         {/* Add more categories as needed */}
       </select>
       <input
