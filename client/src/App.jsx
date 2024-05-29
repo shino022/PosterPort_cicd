@@ -5,6 +5,7 @@ import CartButton from "./components/CartButton";
 import Hero from "./components/Hero";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { MdOutlinePayment } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 export default function App() {
@@ -59,9 +60,9 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen min-w-[350px]">
       <Hero />
-      <CartButton />
+
       <div className="flex flex-col items-center max-w-[70%] w-full mb-4">
         <SearchBar
           posters={posters}
@@ -72,12 +73,15 @@ export default function App() {
           setFilteredResults={setFilteredResults}
         />
 
-        <Link
-          to="/payment"
-          className="bg-cyan-800 text-white px-4 py-2 rounded-md"
-        >
-          Go to Payment
-        </Link>
+        <div className="my-2 flex w-full justify-end items-center">
+          <Link to="/payment">
+            <button className="flex gap-2 items-center bg-yellow-500 text-violet-900 rounded-md m-2 p-2 hover:scale-105">
+              Simulate Payment
+              <MdOutlinePayment className="text-xl"/>
+            </button>
+          </Link>
+          <CartButton />
+        </div>
         {found ? (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-4 px-2 py-2">
@@ -94,8 +98,9 @@ export default function App() {
             </div>
             <div className="flex justify-center mt-4">
               <button
-                className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${currentPage === 1 ? "bg-gray-500" : "bg-amber-400"
-                  }`}
+                className={`px-4 py-2 mx-2 text-black rounded-md border border-white ${
+                  currentPage === 1 ? "bg-gray-500" : "bg-amber-400"
+                }`}
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
@@ -105,16 +110,18 @@ export default function App() {
               {Array.from({ length: totalPages }, (_, index) => (
                 <button
                   key={index + 1}
-                  className={`px-4 py-2 mx-1 text-black rounded-md ${currentPage === index + 1 ? "bg-amber-500" : "bg-amber-300"
-                    }`}
+                  className={`px-4 py-2 mx-1 text-black rounded-md border border-white ${
+                    currentPage === index + 1 ? "bg-amber-500" : "bg-amber-300"
+                  }`}
                   onClick={() => handlePageClick(index + 1)}
                 >
                   {index + 1}
                 </button>
               ))}
               <button
-                className={`px-4 py-2 mx-2 text-black rounded-md border-2 border-neutral-900 ${currentPage === totalPages ? "bg-gray-500" : "bg-amber-400"
-                  }`}
+                className={`px-4 py-2 mx-2 text-black rounded-md border border-white ${
+                  currentPage === totalPages ? "bg-gray-500" : "bg-amber-400"
+                }`}
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >
@@ -123,7 +130,9 @@ export default function App() {
             </div>
           </>
         ) : (
-          <div className="text-3xl w-[300px] text-center rounded-md text-white py-2 bg-slate-700 m-auto">No results found</div>
+          <div className="text-3xl w-[300px] text-center rounded-md text-white py-2 bg-slate-700 border-2 border-white m-auto">
+            No results found
+          </div>
         )}
       </div>
     </div>

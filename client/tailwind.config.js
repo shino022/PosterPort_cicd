@@ -9,6 +9,7 @@ export default {
     },
     fontFamily: {
       jersey: ['"Jersey 10"', 'sans-serif'],
+      antonio:['"Antonio"', 'sans-serif'],
     },
   },
   plugins: [],

@@ -47,6 +47,12 @@ const PaymentPage = () => {
     setValue("cardNumber", value, { shouldValidate: true });
   };
 
+  //func to format cvv
+  const formatCVV = (event) => {
+    let { value } = event.target;
+    value = value.replace(/\D/g, "");
+    setValue("cvv", value, { shouldValidate: true });
+  };
   return (
     <div className="flex items-center justify-center min-h-screen px-1">
       <div className="w-[500px] mx-auto p-4 bg-white rounded-lg shadow-md">
@@ -94,6 +100,7 @@ const PaymentPage = () => {
             <input
               id="cardnumber"
               type="text"
+              placeholder="1234-5678-9012-3456"
               {...register("cardNumber", {
                 required: "Card number is required",
                 validate: (value) => {
@@ -119,6 +126,7 @@ const PaymentPage = () => {
                 Card Type: {cardType.toUpperCase()}
               </span>
             )}
+
             <label
               htmlFor="cvv"
               className="block text-sm font-medium text-gray-700"
@@ -129,14 +137,16 @@ const PaymentPage = () => {
               id="cvv"
               type="text"
               maxLength={3}
+              placeholder="123"
               {...register("cvv", {
-                required: "3 digit CVV is required",
+                required: "3 digit CVV is required - must be numbers only",
                 maxLength: {
                   value: 3,
                   message: "CVV must be exactly 3 digits",
-                },
+                },                
               })}
               className="block w-1/6 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-center"
+              onChange={formatCVV}
             />
             {errors.cvv && (
               <span className="text-red-500">{errors.cvv.message}</span>
