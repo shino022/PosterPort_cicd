@@ -8,9 +8,12 @@ const Card = ({
   posterImg,
   posterTitle,
   posterDescription,
-  posterPrice,
+  posterPrice,  
+  posterCount,
+  incrementCount,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
 
   const handleDownload = () => {
     //Create a new anchor element
@@ -32,6 +35,11 @@ const Card = ({
     document.body.removeChild(link);
   };
 
+  const handleCartBtn = () => {
+    incrementCount();
+  };
+
+
   return (
     <div className="shadow-md h-auto rounded-md px-2 py-2 bg-slate-400 min-w-[200px] lg:min-w-[150px] sm:h-[500px] flex flex-col">
       <img
@@ -43,12 +51,13 @@ const Card = ({
       <h2 className="text-xl m-auto font-bold">{posterTitle}</h2>
       <p className="text-xl m-auto font-bold text-pink-700 font-jersey">Click on image to download</p>
       <p className="italic m-auto">{posterDescription}</p>
+      <p className="italic m-auto">{posterCount}</p>
 
       <div className="flex justify-between items-center mt-auto">
         <p className="text-xl">{`$${posterPrice}`}</p>
         <button
           className="flex hover:cursor-pointer  bg-amber-500 rounded-lg p-2"
-          onClick={() => console.log(posterId)}
+          onClick={handleCartBtn}
         >
           Cart
           <MdAdd className="text-2xl" />

@@ -15,27 +15,37 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
   const [found, setFound] = useState(true);
+  const [counts, setCounts] = useState({});
+
+  
+  useEffect(() => {
+    // Initialize counts state with each poster having a count of 0
+    const initialCounts = {};
+    posters.forEach((poster) => {
+      initialCounts[poster.id] = 0;
+    });
+    setCounts(initialCounts);
+  }, []);
 
   useEffect(() => {
     const filterResults = () => {
-      let results = posters;
+      let results = posters.map(poster => ({
+        ...poster,
+        count: counts[poster.id] || 0  // Ensure counts are carried over when filtering
+      }));
       if (category !== "All categories") {
-        results = results.filter((poster) => poster.category === category);
+        results = results.filter(poster => poster.category === category);
       }
-
       if (searchTerm) {
-        results = results.filter((poster) =>
+        results = results.filter(poster =>
           poster.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }
-
       setFilteredResults(results);
     };
 
     filterResults();
-
-    filteredResults.length === 0 ? setFound(false) : setFound(true);
-  }, [searchTerm, category, filteredResults.length]);
+  }, [searchTerm, category, counts]); 
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -59,6 +69,13 @@ export default function App() {
     setCurrentPage(page);
   };
 
+  const incrementCount = (id) => {
+    setCounts(prevCounts => ({
+      ...prevCounts,
+      [id]: prevCounts[id] + 1
+    }));
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen min-w-[350px]">
       <Hero />
@@ -77,7 +94,7 @@ export default function App() {
           <Link to="/payment">
             <button className="flex gap-2 items-center bg-yellow-500 text-violet-900 rounded-md m-2 p-2 hover:scale-105">
               Simulate Payment
-              <MdOutlinePayment className="text-xl"/>
+              <MdOutlinePayment className="text-xl" />
             </button>
           </Link>
           <CartButton />
@@ -93,6 +110,8 @@ export default function App() {
                   posterTitle={poster.title}
                   posterDescription={poster.description}
                   posterPrice={poster.price}
+                  posterCount={poster.count}
+                  incrementCount={() => incrementCount(poster.id)}
                 />
               ))}
             </div>
