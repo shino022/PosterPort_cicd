@@ -8,7 +8,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-export default function App({counts, setCounts}) {
+export default function App({counts, incrementCount}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All categories");
   const [filteredResults, setFilteredResults] = useState([]);
@@ -68,13 +68,6 @@ export default function App({counts, setCounts}) {
 
   const handlePageClick = (page) => {
     setCurrentPage(page);
-  };
-
-  const incrementCount = (id) => {
-    setCounts(prevCounts => ({
-      ...prevCounts,
-      [id]: prevCounts[id] + 1
-    }));
   };
 
   return (

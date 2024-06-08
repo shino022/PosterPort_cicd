@@ -14,37 +14,41 @@ import posters from "../data/posters.js";
 import { Link } from 'react-router-dom';
 import { RxArrowTopRight } from "react-icons/rx";
 
-const Cart = ({ counts }) => {
+const Cart = ({ counts, incrementCount, decrementCount }) => {
   // Create a list of posters that are actually in the cart
   const cartItems = posters.filter(poster => counts[poster.id] > 0);
   console.log(cartItems);
 
   return (
-    <div className="flex justify-center w-full h-[100vh]">
-      <div className="bg-amber-500 w-[70%] min-w-[350px] px-4 opacity-95">
-        <h2 className='text-white text-center m-2 text-2xl'>YOUR CART</h2>
+    <div className="flex justify-center w-full min-h-[100vh]">
+      <div className="bg-amber-500 w-[70%] min-w-[350px] px-4 pb-2 opacity-95">
+        <h2 className='text-white text-center m-2 text-3xl'>YOUR CART</h2>
         <div>
           <Link to='/'>
-            <button className='flex group justify-center items-center gap-1 text-xl text-amber-500 bg-indigo-500 p-2 rounded-md hover:bg-indigo-700'>HOME <RxArrowTopRight className='group-hover:rotate-45' /></button>
+            <button className='flex group justify-center items-center gap-1 text-xl text-amber-500 bg-indigo-600 p-2 rounded-md hover:bg-indigo-700'>HOME <RxArrowTopRight className='group-hover:rotate-45' /></button>
           </Link>
         </div>
         {cartItems.length > 0 ? (
-          <ul className='text-white'>
+          <ul className='text-white grid grid-cols-1 md:grid-cols-2 gap-2 text-xl'>
             {cartItems.map(poster => (
-              <div className='w-full bg-slate-500 p-2'>
-                <li key={poster.id} className='flex items-center gap-5'>
+              <div className='w-full bg-gray-500 p-2 mt-2 rounded-md border-2 border-indigo-700'>
+                <li key={poster.id} className='flex items-center gap-1 md:gap-16'>
                   <div>
                     <h3>{poster.title}</h3>
                     <img
                       src={poster.imageUrl}
                       alt={poster.title}
-                      className="rounded-lg  border border-blue-500 border-opacity-50 h-[300px]"
+                      className="rounded-lg border border-blue-500 border-opacity-50 h-[300px]"
                     />
                   </div>
                   <div>
                     <p>Quantity: {counts[poster.id]}</p>
-                    <p>Price per item: ${poster.price}</p>
-                    <p>Total: ${counts[poster.id] * poster.price}</p>
+                    <p>$$ per item: ${poster.price}</p>
+                    <div className='w-full'>
+                      <button className='bg-green-500 p-2 rounded-md w-10 hover:bg-green-700 text-xl mt-2 mr-2' onClick={() => incrementCount(poster.id)}>+</button>
+                      <button className='bg-red-500 p-2 rounded-md w-10 hover:bg-red-700 text-xl' onClick={() => decrementCount(poster.id)}>-</button>
+                    </div>
+                    <p>Total for this item: <span className='text-green-500 text-2xl'>${counts[poster.id] * poster.price}</span></p>
                   </div>
                 </li>
               </div>
