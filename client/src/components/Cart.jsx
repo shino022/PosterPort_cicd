@@ -28,9 +28,9 @@ const Cart = ({ counts, incrementCount, decrementCount }) => {
 
   return (
     <div className="flex justify-center w-full min-h-[100vh]">
-      <div className="bg-amber-500 w-[70%] min-w-[350px] px-4 pb-2 opacity-95">
+      <div className="bg-amber-500 w-[70%] min-w-[350px] px-4 pb-2 bg-opacity-80">
         <h2 className="text-white text-center m-2 text-3xl">YOUR CART</h2>
-        <Link to="/" style={{ display: "inline-block" }}>
+        <Link to="/" className="inline-block">
           <button className="flex group justify-center items-center gap-1 text-xl text-amber-500 bg-indigo-600 p-2 rounded-md hover:bg-indigo-700">
             HOME <RxArrowTopRight className="group-hover:rotate-45" />
           </button>
@@ -39,7 +39,7 @@ const Cart = ({ counts, incrementCount, decrementCount }) => {
           <div>
             <ul className="text-white grid grid-cols-1 md:grid-cols-2 gap-2 text-xl">
               {cartItems.map((poster) => (
-                <div className="w-full bg-gray-500 p-2 mt-2 rounded-md border-2 border-indigo-700">
+                <div className="w-full bg-indigo-500 p-2 mt-2 rounded-md border-2 border-indigo-600">
                   <li
                     key={poster.id}
                     className="flex items-center gap-1 md:gap-16"

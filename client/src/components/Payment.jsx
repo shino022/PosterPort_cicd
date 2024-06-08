@@ -58,7 +58,7 @@ const PaymentPage = () => {
   return (
     <div className="flex items-center justify-center min-h-screen min-w-[350px] px-1">
       <div>
-        <Link to="/cart" style={{ display: 'inline-block' }}>
+        <Link to="/cart" className="inline-block">
           <button className="flex group justify-center items-center gap-1 text-xl text-amber-500 bg-indigo-600 p-2 rounded-md hover:bg-indigo-700 mb-2 mr-auto">
             BACK TO CART <RxArrowTopRight className="group-hover:rotate-45" />
           </button>

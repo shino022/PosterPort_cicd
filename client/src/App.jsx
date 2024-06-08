@@ -8,16 +8,14 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-export default function App({counts, incrementCount}) {
+export default function App({ counts, incrementCount }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All categories");
   const [filteredResults, setFilteredResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
   const [found, setFound] = useState(true);
-  
 
-  
   // useEffect(() => {
   //   // Initialize counts state with each poster having a count of 0
   //   const initialCounts = {};
@@ -29,15 +27,15 @@ export default function App({counts, incrementCount}) {
 
   useEffect(() => {
     const filterResults = () => {
-      let results = posters.map(poster => ({
+      let results = posters.map((poster) => ({
         ...poster,
-        count: counts[poster.id] || 0  // Ensure counts are carried over when filtering
+        count: counts[poster.id] || 0, // Ensure counts are carried over when filtering
       }));
       if (category !== "All categories") {
-        results = results.filter(poster => poster.category === category);
+        results = results.filter((poster) => poster.category === category);
       }
       if (searchTerm) {
-        results = results.filter(poster =>
+        results = results.filter((poster) =>
           poster.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }
@@ -46,7 +44,21 @@ export default function App({counts, incrementCount}) {
     };
 
     filterResults();
-  }, [searchTerm, category, counts]); 
+  }, [searchTerm, category]);
+
+  //separate useEffect to ensure change in counts does not set page to 1
+  useEffect(() => {
+    const filterResults = () => {
+      let results = posters.map((poster) => ({
+        ...poster,
+        count: counts[poster.id] || 0, // Ensure counts are carried over when filtering
+      }));
+
+      setFilteredResults(results);
+    };
+
+    filterResults();
+  }, [counts]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

@@ -41,7 +41,7 @@ const Card = ({
 
 
   return (
-    <div className="shadow-md h-auto rounded-md px-2 py-2 bg-slate-400 min-w-[200px] lg:min-w-[150px] sm:h-[500px] flex flex-col">
+    <div className="shadow-md h-auto rounded-md px-2 py-2 bg-amber-200 min-w-[200px] lg:min-w-[150px] sm:h-[500px] flex flex-col border-2 border-amber-400">
       <img
         src={posterImg}
         alt={posterTitle}
@@ -49,7 +49,7 @@ const Card = ({
         onClick={() => setIsExpanded(true)}
       />
       <h2 className="text-xl m-auto font-bold">{posterTitle}</h2>
-      <p className="text-xl m-auto font-bold text-pink-700 font-jersey">Click on image to download</p>
+      <p className="text-xl m-auto font-bold text-indigo-700 font-jersey">Click on image to download</p>
       <p className="italic m-auto">{posterDescription}</p>
       
 
