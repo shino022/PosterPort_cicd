@@ -51,10 +51,11 @@ const Card = ({
       <h2 className="text-xl m-auto font-bold">{posterTitle}</h2>
       <p className="text-xl m-auto font-bold text-pink-700 font-jersey">Click on image to download</p>
       <p className="italic m-auto">{posterDescription}</p>
-      <p className="italic m-auto">{posterCount}</p>
+      
 
       <div className="flex justify-between items-center mt-auto">
-        <p className="text-xl">{`$${posterPrice}`}</p>
+        <p className="text-xl text-gray-900">{`$${posterPrice}`}</p>
+        <p className="m-auto bg-violet-900 text-white w-10 p-2 rounded-full text-center">{posterCount}</p>
         <button
           className="flex hover:cursor-pointer  bg-amber-500 rounded-lg p-2"
           onClick={handleCartBtn}

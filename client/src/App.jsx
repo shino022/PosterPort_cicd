@@ -8,24 +8,24 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-export default function App() {
+export default function App({counts, setCounts}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All categories");
   const [filteredResults, setFilteredResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
   const [found, setFound] = useState(true);
-  const [counts, setCounts] = useState({});
+  
 
   
-  useEffect(() => {
-    // Initialize counts state with each poster having a count of 0
-    const initialCounts = {};
-    posters.forEach((poster) => {
-      initialCounts[poster.id] = 0;
-    });
-    setCounts(initialCounts);
-  }, []);
+  // useEffect(() => {
+  //   // Initialize counts state with each poster having a count of 0
+  //   const initialCounts = {};
+  //   posters.forEach((poster) => {
+  //     initialCounts[poster.id] = 0;
+  //   });
+  //   setCounts(initialCounts);
+  // }, []);
 
   useEffect(() => {
     const filterResults = () => {
@@ -42,6 +42,7 @@ export default function App() {
         );
       }
       setFilteredResults(results);
+      setCurrentPage(1);
     };
 
     filterResults();
