@@ -6,6 +6,7 @@ import Hero from "./components/Hero";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
+import { FaRegImage } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 export default function App({ counts, incrementCount }) {
@@ -97,6 +98,12 @@ export default function App({ counts, incrementCount }) {
         />
 
         <div className="my-2 flex w-full justify-end items-center">
+          <Link to="/form">
+            <button className="flex gap-2 items-center bg-black text-white border rounded-md m-2 p-2 hover:scale-105">
+              Generate Image Using OpenAI API
+              <FaRegImage className="text-xl" />
+            </button>
+          </Link>
           <Link to="/payment">
             <button className="flex gap-2 items-center bg-yellow-500 text-violet-900 rounded-md m-2 p-2 hover:scale-105">
               Simulate Payment

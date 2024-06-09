@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../App.jsx";
 import Cart from "./Cart.jsx";
 import Payment from "./Payment.jsx";
+import Form from "./Form.jsx";
 import posters from "../data/posters.js";
 function MainComponent() {
   const [counts, setCounts] = useState({}); // State for tracking counts
@@ -26,6 +27,10 @@ function MainComponent() {
       path: "/cart",
       element: <Cart counts={counts} setCounts={setCounts} incrementCount={incrementCount} decrementCount={decrementCount}/>,
     },
+    {
+      path: "/form",
+      element: <Form />,
+    }
   ]);
 
   useEffect(() => {
