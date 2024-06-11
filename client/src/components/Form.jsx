@@ -1,16 +1,20 @@
-import { useState, Suspense } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { RxArrowTopRight } from "react-icons/rx";
 
 const Form = () => {
   const [prompt, setPrompt] = useState("");
   const [url, setUrl] = useState("");
+  const [loading, setLoading] = useState(false);  // State to track loading status
+
   const handleChange = (e) => {
     setPrompt(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);  // Start loading
+
     setUrl("");
     setPrompt("");
 
@@ -25,6 +29,7 @@ const Form = () => {
       const data = await response.json();
       console.log(data);
       setUrl(data.data[0].url);
+      setLoading(false);  // Stop loading (after setting the URL
     } catch (error) {
       console.error(error);
     }
@@ -56,9 +61,8 @@ const Form = () => {
             </button>
           </Link>
         </form>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Ima url={url} />
-        </Suspense>
+        {loading ? <div>Loading...</div> : url && <img src={url} alt="Generated" className="rounded-lg w-full mt-2 border-2" />}
+
 
 
         {/* {url && <img src={url} alt="generated" className="rounded-lg w-full mt-2 border-2" />} */}
