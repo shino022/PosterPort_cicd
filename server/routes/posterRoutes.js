@@ -8,10 +8,10 @@ router.post("/submit", async (req, res) => {
   const apiKey = process.env.OPENAI_API_KEY;
 
   const postData = {
-    model: "dall-e-3",
-    prompt: prompt,
+    model: "dall-e-2",
+    prompt: `Create an 80's cartoon style posterized ${prompt}`,
     n: 1,
-    size: "1024x1024",
+    size: "256x256",
   };
 
   try {

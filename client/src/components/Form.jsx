@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { Link } from "react-router-dom";
 import { RxArrowTopRight } from "react-icons/rx";
 
@@ -11,6 +11,9 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUrl("");
+    setPrompt("");
+
     try {
       const response = await fetch("http://localhost:3000/posters/submit", {
         method: "POST",
@@ -53,10 +56,22 @@ const Form = () => {
             </button>
           </Link>
         </form>
-        {url && <img src={url} alt="generated" className="rounded-lg w-full mt-2 border-2" />}
+        <Suspense fallback={<div>Loading...</div>}>
+          <Ima url={url} />
+        </Suspense>
+
+
+        {/* {url && <img src={url} alt="generated" className="rounded-lg w-full mt-2 border-2" />} */}
       </div>
     </div>
   );
 };
 
+const Ima = ({ url }) => {
+  return (
+    <div>
+      <img src={url} className="rounded-lg w-full mt-2 border-2" />
+    </div>
+  );
+}
 export default Form;
