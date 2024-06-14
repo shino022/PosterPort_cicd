@@ -5,6 +5,8 @@ import Cart from "./Cart.jsx";
 import Payment from "./Payment.jsx";
 import Form from "./Form.jsx";
 import posters from "../data/posters.js";
+import AiImages from "./AiImages.jsx";
+
 function MainComponent() {
   const [counts, setCounts] = useState({}); // State for tracking counts
 
@@ -30,6 +32,10 @@ function MainComponent() {
     {
       path: "/form",
       element: <Form />,
+    },
+    {
+      path: "/aiPosters",
+      element: <AiImages />,
     }
   ]);
 

@@ -27,8 +27,7 @@ const Form = () => {
         body: JSON.stringify({ prompt }),
       });
       const data = await response.json();
-      console.log(data);
-      setUrl(data.data[0].url);
+      setUrl(data.image);
       setLoading(false);  // Stop loading (after setting the URL
     } catch (error) {
       console.error(error);
@@ -62,10 +61,6 @@ const Form = () => {
           </Link>
         </form>
         {loading ? <div>Loading...</div> : url && <img src={url} alt="Generated" className="rounded-lg w-full mt-2 border-2" />}
-
-
-
-        {/* {url && <img src={url} alt="generated" className="rounded-lg w-full mt-2 border-2" />} */}
       </div>
     </div>
   );

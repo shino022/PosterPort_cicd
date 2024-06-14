@@ -17,15 +17,6 @@ export default function App({ counts, incrementCount }) {
   const itemsPerPage = 8;
   const [found, setFound] = useState(true);
 
-  // useEffect(() => {
-  //   // Initialize counts state with each poster having a count of 0
-  //   const initialCounts = {};
-  //   posters.forEach((poster) => {
-  //     initialCounts[poster.id] = 0;
-  //   });
-  //   setCounts(initialCounts);
-  // }, []);
-
   useEffect(() => {
     const filterResults = () => {
       let results = posters.map((poster) => ({
