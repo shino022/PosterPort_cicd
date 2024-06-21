@@ -6,7 +6,7 @@ const posterController = require('../controllers/posterController');
 router.post("/submit", posterController.createPoster);
 
 //Route to get all posters
-router.get("/submit", posterController.getAllPosters);
+router.get("/", posterController.getAllPosters);
 
 
 module.exports = router;

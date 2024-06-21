@@ -27,7 +27,8 @@ const Form = () => {
         body: JSON.stringify({ prompt }),
       });
       const data = await response.json();
-      setUrl(data.image);
+      console.log(data);
+      setUrl(data.imageUrl);
       setLoading(false);  // Stop loading (after setting the URL
     } catch (error) {
       console.error(error);
