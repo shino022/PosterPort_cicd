@@ -24,7 +24,7 @@ jobs:
         ssh-keygen -R ec2-52-91-174-152.compute-1.amazonaws.com
     - name: Deploy to AWS EC2
       run: |
-        rsync -avz --exclude 'node_modules/' --exclude '.env' ./server/ ubuntu@ec2-52-91-174-152.compute-1.amazonaws.com::/opt/server
+        rsync -avz --exclude 'node_modules/' --exclude '.env' ./server/ ubuntu@ec2-52-91-174-152.compute-1.amazonaws.com:/opt/server
         ssh ubuntu@ec2-52-91-174-152.compute-1.amazonaws.com 'cd /opt/server && npm install --production && pm2 restart all'
 
     - name: Verify deployment
