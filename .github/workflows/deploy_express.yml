@@ -18,7 +18,7 @@ jobs:
     - name: Set up SSH key
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 --decode > ~/.ssh/id_rsa
+        echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" | base64 --decode > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan ec2-52-91-174-152.compute-1.amazonaws.com >> ~/.ssh/known_hosts
         # ssh-keygen -R ec2-52-91-174-152.compute-1.amazonaws.com
