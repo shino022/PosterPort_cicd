@@ -31,8 +31,8 @@ exports.getAllPosters = asyncHandler(async (req, res, next) => {
         return { key: item.Key, url: signedUrl };
       })
     );
-    const urlsOnly = urls.map((url)=> url.url)
-    res.json({urlsOnly});
+    const urlsOnly = urls.map((url) => url.url);
+    res.json({ urlsOnly });
   } catch (error) {
     console.error("Error listing bucket contents:", error);
     res.status(500).send("Failed to list images");
@@ -77,17 +77,21 @@ exports.createPoster = asyncHandler(async (req, res, next) => {
         Bucket: bucketName,
         Key: objectKey,
         Body: imageResponse.data,
-        ContentType: 'image/jpeg'  // To prevent downloading
-      }
+        ContentType: "image/jpeg", // To prevent downloading
+      },
     });
 
     await uploader.done();
 
     // Generate a signed URL for the uploaded image
-    const signedUrl = await getSignedUrl(s3Client, new GetObjectCommand({
-      Bucket: bucketName,
-      Key: objectKey,
-    }), { expiresIn: 3600 }); // URL valid for 1 hour
+    const signedUrl = await getSignedUrl(
+      s3Client,
+      new GetObjectCommand({
+        Bucket: bucketName,
+        Key: objectKey,
+      }),
+      { expiresIn: 3600 }
+    ); // URL valid for 1 hour
 
     // Respond with the signed URL
     res.json({ imageUrl: signedUrl });
