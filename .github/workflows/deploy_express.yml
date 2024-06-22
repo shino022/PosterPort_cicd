@@ -21,7 +21,8 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 --decode > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan ec2-52-91-174-152.compute-1.amazonaws.com >> ~/.ssh/known_hosts
-        ssh-keygen -R ec2-52-91-174-152.compute-1.amazonaws.com
+        # ssh-keygen -R ec2-52-91-174-152.compute-1.amazonaws.com
+        cat ~/.ssh/known_hosts  # Debug: view what was added
     - name: Deploy to AWS EC2
       run: |
         rsync -avz --exclude 'node_modules/' --exclude '.env' ./server/ ubuntu@ec2-52-91-174-152.compute-1.amazonaws.com:/opt/server
