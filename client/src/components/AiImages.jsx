@@ -6,7 +6,7 @@ const AiImages = () => {
     useEffect(() => {
         const getPoster = async () => {
             try {
-                const response = await fetch("http://localhost:3000/posters");
+                const response = await fetch(`${import.meta.env.VITE_BASE_URL}posters`);
                 const data = await response.json();
                 console.log(data);
                 setImages(data.urlsOnly);

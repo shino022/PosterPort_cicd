@@ -19,7 +19,7 @@ const Form = () => {
     setPrompt("");
 
     try {
-      const response = await fetch("http://localhost:3000/posters/submit", {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}posters/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

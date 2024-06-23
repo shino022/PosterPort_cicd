@@ -1,11 +1,11 @@
-name: Deploy Express Server to AWS EC2
+name: Deploy Express client to AWS EC2
 
 on:
   push:
     branches:
       - main  # Trigger deployment on pushes to the main branch
     paths:
-      - 'server/**'  # Trigger only when changes occur in the server directory
+      - 'client/**'  # Trigger only when changes occur in the client directory
 
 jobs:
   deploy:
@@ -25,8 +25,8 @@ jobs:
         cat ~/.ssh/known_hosts  # Debug: view what was added
     - name: Deploy to AWS EC2
       run: |
-        rsync -avz --exclude 'node_modules/' --exclude '.env' ./server/ ubuntu@ec2-52-91-174-152.compute-1.amazonaws.com:/opt/server
-        ssh ubuntu@ec2-52-91-174-152.compute-1.amazonaws.com 'cd /opt/server && npm install --production && pm2 restart ./bin/www --name express-server'
+        rsync -avz --exclude 'node_modules/' ./client/ ubuntu@ec2-52-91-174-152.compute-1.amazonaws.com:/opt/client
+        ssh ubuntu@ec2-52-91-174-152.compute-1.amazonaws.com 'cd /opt/client && npm install --production && npm run build'
 
     - name: Verify deployment
       run: |

@@ -1,9 +1,13 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
+var path = require('path');
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.json({ title: "Hellow world from Express" });
+// Serve static files
+router.use(express.static(path.join(__dirname, '..', '..', 'client', 'dist')));
+
+// Route to serve the index.html from the React app
+router.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', '..', 'client', 'dist', 'index.html'));
 });
 
 module.exports = router;
